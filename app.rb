@@ -66,9 +66,24 @@ get '/meetups/:id' do
   @usermeetups.each do |usermeetup|
     if usermeetup.meetup_id == params[:id].to_i
       @attendees << usermeetup.user
-      # @name = usermeetup.user.username
-      # @avatars << usermeetup.user.avatar_url
     end
   end
   erb :'meetups/show'
+end
+
+get '/meetups/:id/join' do
+  @meetup = Meetup.all.find(params[:id])
+  @current_user = current_user
+
+  if @current_user.nil?
+    flash[:notice] = "You must sign in first to join this meetup"
+  else
+    @usermeetup = Usermeetup.new(user_id: @current_user.id, meetup_id: @meetup.id)
+    if @usermeetup.save
+      flash[:notice] = "You have successfully joined this meetup"
+      redirect "/meetups/#{@meetup.id}"
+    end
+  end
+
+  redirect "/meetups/#{@meetup.id}"
 end
