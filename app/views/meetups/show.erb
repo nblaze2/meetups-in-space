@@ -1,0 +1,21 @@
+<h1><%= @meetup.name %></h1>
+
+<dl>
+  <dt>Creator:</dt>
+  <dd><%= @meetup.creator %></dd>
+  <dt>Location:</dt>
+  <dd><%= @meetup.location %></dd>
+  <dt>Description:</dt>
+  <dd><%= @meetup.description %></dd>
+</dl>
+
+<h3>Attendees:</h3>
+<ul>
+  <% @attendees.each do |attendee| %>
+  <li>
+    <%= attendee.username %>
+  </li>
+  <% end %>
+</ul>
+
+<a href="/meetups">Back to all Meetups</a>

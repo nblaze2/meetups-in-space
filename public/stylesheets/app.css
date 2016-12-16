@@ -38,3 +38,12 @@ a:visited {
   padding: 1em;
   background-color: #3B9089;
 }
+
+input {
+  color: #808080;
+}
+
+.submit-button {
+  background-color: #32cd32;
+  color: white;
+}

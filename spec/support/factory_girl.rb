@@ -8,5 +8,11 @@ FactoryGirl.define do
     sequence(:email) { |n| "jarlax#{n}@launchacademy.com" }
     avatar_url "https://avatars2.githubusercontent.com/u/174825?v=3&s=400"
   end
-end
 
+  factory :meetup do
+    name "Iron Banner"
+    description "Guardians battle for supremacy"
+    location "Fellwinter Peak"
+    creator "Lord Saladin"
+  end
+end

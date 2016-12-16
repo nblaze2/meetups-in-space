@@ -33,5 +33,42 @@ get '/sign_out' do
 end
 
 get '/meetups' do
+  @meetups = Meetup.all.order(:name)
   erb :'meetups/index'
+end
+
+get '/meetups/new' do
+  erb :'meetups/new'
+end
+
+post '/meetups/new' do
+  name = params['name']
+  location = params['location']
+  description = params['description']
+  id = params['id']
+
+  @meetup = Meetup.create(name: name, location: location, description: description, creator: "Nick")
+
+    if @meetup.save
+      flash[:notice] = "You have created an event."
+      redirect "/meetups/#{@meetup.id}"
+
+    else
+      @error = flash[:notice] = "Please fill out form completely"
+      erb:'/meetups/new'
+    end
+end
+
+get '/meetups/:id' do
+  @meetup = Meetup.all.find(params[:id])
+  @usermeetups = Usermeetup.all
+  @attendees = []
+  @usermeetups.each do |usermeetup|
+    if usermeetup.meetup_id == params[:id].to_i
+      @attendees << usermeetup.user
+      # @name = usermeetup.user.username
+      # @avatars << usermeetup.user.avatar_url
+    end
+  end
+  erb :'meetups/show'
 end
