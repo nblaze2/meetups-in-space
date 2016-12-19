@@ -47,14 +47,14 @@ post '/meetups/new' do
   description = params['description']
   id = params['id']
 
-  @meetup = Meetup.create(name: name, location: location, description: description, creator: "Nick")
+  @meetup = Meetup.new(name: name, location: location, description: description, creator: "Nick")
 
     if @meetup.save
       flash[:notice] = "You have created an event."
       redirect "/meetups/#{@meetup.id}"
 
     else
-      @error = flash[:notice] = "Please fill out form completely"
+      flash[:notice] = "Please fill out form completely"
       erb:'/meetups/new'
     end
 end
